@@ -7,9 +7,9 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
+        stage('Compile') {
             steps {
-                echo "this is Build stage"
+                echo "this is compile stage"
             }
           }
 		  
