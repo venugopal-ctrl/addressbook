@@ -16,7 +16,7 @@ pipeline {
 	stages { 
         stage('Compile') {
             steps {
-                echo 'This is compile stage'
+                echo 'This is compile stage ${params.APPVERSION}'
             }
         }
 		        stage('Unit Test') {
@@ -26,7 +26,7 @@ pipeline {
         }
 		        stage('Package') {
             steps {
-                echo 'This is package stage'
+                echo 'This is package stage ${params.Environment}'
             }
         }
 		        stage('Deploy') {
