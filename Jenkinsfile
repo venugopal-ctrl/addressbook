@@ -16,17 +16,17 @@ pipeline {
 	stages { 
         stage('Compile') {
             steps {
-                echo 'This is compile stage ${params.APPVERSION}'
+                echo "This is compile stage ${params.APPVERSION}"
             }
         }
 		        stage('Unit Test') {
             steps {
-                echo 'This is compile stage'
+                echo 'This is Unitest stage'
             }
         }
 		        stage('Package') {
             steps {
-                echo 'This is package stage ${params.Environment}'
+                echo "This is package stage ${params.Environment}"
             }
         }
 		        stage('Deploy') {
