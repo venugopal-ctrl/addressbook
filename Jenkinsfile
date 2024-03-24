@@ -37,6 +37,13 @@ pipeline {
             }
         }
 		        stage('Deploy') {
+                    input {
+                        message "Select the version to deploy"
+                        ok "selected"
+                        parameters{
+                           choice(name:'PLATFORM', choices: ['EKS', 'KBS', 'ONPREM','AZURE'], description: 'Pick something') 
+                        }
+                    }
             steps {
                 echo 'This is deploy stage'
             }
