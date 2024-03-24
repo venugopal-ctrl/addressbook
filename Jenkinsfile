@@ -42,6 +42,13 @@ string(name: 'Environment', defaultValue: 'test', description: 'version to deplo
           }
 		  
 		          stage('Deploy') {
+                    input {
+                message "Select the version to deploy?"
+                ok "Version Selected "
+                parameters{
+                    choice(name:'PLATFORM',choices:['EKS','ONPREM_KBS','AWS','AZURE'])
+                }
+                    }
             steps {
                 echo "this is Deploy stage" 
             }
