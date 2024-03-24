@@ -6,13 +6,13 @@ pipeline {
     }
     parameters {
        // string(name: 'Environment', defaultValue: 'Test', description: 'version to deploy?')
-       choice(name: 'Environment', choices: ['L1', 'L2', 'PROD'], description: 'Pick something')
+       choice(name:'Environment', choices: ['L1', 'L2', 'PROD'], description: 'Pick something')
 
         //text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
 
         booleanParam(name: 'executetests', defaultValue: true, description: 'Decide to run test cases')
 
-        choice(name: 'APPVERSION', choices: ['1.1', '1.2', '1.3'], description: 'Pick something')
+        choice(name:'APPVERSION', choices: ['1.1', '1.2', '1.3'], description: 'Pick something')
     }
 	stages { 
         stage('Compile') {
