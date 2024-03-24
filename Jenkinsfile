@@ -20,7 +20,7 @@ string(name: 'Environment', defaultValue: 'test', description: 'version to deplo
     stages {
         stage('Compile') {
             steps {
-                script{
+                
                 echo "this is compile stage ${params.APPVERSION}"
                 sh 'mvn compile'
                 }
@@ -36,10 +36,10 @@ string(name: 'Environment', defaultValue: 'test', description: 'version to deplo
      }
            
     steps {
-        script{
+        
                 echo "this is UnitTest stage"
                 sh 'mvn test'
-            }
+            
     }
           }
 		  
@@ -64,4 +64,4 @@ string(name: 'Environment', defaultValue: 'test', description: 'version to deplo
             }
           }
     }
-}
+
