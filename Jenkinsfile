@@ -45,6 +45,7 @@ string(name: 'Environment', defaultValue: 'test', description: 'version to deplo
                     input {
                 message "Select the version to deploy?"
                 ok "Version Selected "
+                submitter "Discared"
                 parameters{
                     choice(name:'PLATFORM',choices:['EKS','ONPREM_KBS','AWS','AZURE'])
                 }
