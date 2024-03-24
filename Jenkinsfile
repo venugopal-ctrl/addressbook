@@ -5,7 +5,8 @@ pipeline {
         maven "mymaven"
     }
     parameters {
-        string(name: 'Environment', defaultValue: 'Test', description: 'version to deploy?')
+       // string(name: 'Environment', defaultValue: 'Test', description: 'version to deploy?')
+       choice(name: 'Environment', choices: ['L1', 'L2', 'PROD'], description: 'Pick something')
 
         //text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
 
