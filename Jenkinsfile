@@ -61,7 +61,7 @@ string(name: 'Environment', defaultValue: 'test', description: 'version to deplo
             steps {
                 echo "this is Deploy stage" 
                 sh 'mvn deploy'
-            }
-          }
-    }
-
+			
+			}			
+		}
+}
