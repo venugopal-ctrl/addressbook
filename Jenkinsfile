@@ -6,22 +6,33 @@ pipeline {
         maven "mymaven"
     }
 
+    parameters{
+string(name: 'Environment', defaultValue: 'test', description: 'version to deploy')
+
+      //  text(name: 'executeTests', defaultValue: 'True', description: 'Enter some information about the person')
+
+        booleanParam(name: 'executeTests', defaultValue: true, description: 'Decide to run it ')
+
+        choice(name: 'APPVERSION', choices: ['1.1','1.2','1.3','1.4'], description: 'select the version')
+
+    }
+
     stages {
         stage('Compile') {
             steps {
-                echo "this is compile stage"
+                echo "this is compile stage ${params.APPVERSION}"
             }
           }
 		  
 		          stage('UnitTest') {
             steps {
-                echo "this is UnitTest stage" 
+                echo "this is UnitTest stage"
             }
           }
 		  
 		          stage('Package') {
             steps {
-                echo "this is Package stage"
+                echo "this is Package stage ${params.Environment} "
             }
           }
 		  
