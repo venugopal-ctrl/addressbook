@@ -25,6 +25,11 @@ string(name: 'Environment', defaultValue: 'test', description: 'version to deplo
           }
 		  
 		          stage('UnitTest') {
+     when {
+        expression {
+            params.executeTests==true
+        }
+     }
             steps {
                 echo "this is UnitTest stage"
             }
