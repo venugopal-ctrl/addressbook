@@ -4,6 +4,15 @@ pipeline {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "mymaven"
     }
+    parameters {
+        string(name: 'Environment', defaultValue: 'Test', description: 'version to deploy?')
+
+        //text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
+
+        booleanParam(name: 'executetests', defaultValue: true, description: 'Decide to run test cases')
+
+        choice(name: 'APPVERSION', choices: ['1.1', '1.2', '1.3'], description: 'Pick something')
+    }
 	stages { 
         stage('Compile') {
             steps {
