@@ -20,30 +20,39 @@ string(name: 'Environment', defaultValue: 'test', description: 'version to deplo
     stages {
         stage('Compile') {
             steps {
+                script{
                 echo "this is compile stage ${params.APPVERSION}"
+                sh 'mvn compile'
+                }
             }
           }
 		  
 		          stage('UnitTest') {
+                  
      when {
         expression {
             params.executeTests==true
         }
      }
-            steps {
+           
+    steps {
+        script{
                 echo "this is UnitTest stage"
+                sh 'mvn test'
             }
+    }
           }
 		  
 		          stage('Package') {
             steps {
                 echo "this is Package stage ${params.Environment} "
+                sh 'mvn package'
             }
           }
 		  
 		          stage('Deploy') {
                     input {
-                message "Select the version to deploy?"
+                message "Select the version to deploy"
                 ok "Version Selected "
                 parameters{
                     choice(name:'PLATFORM',choices:['EKS','ONPREM_KBS','AWS','AZURE'])
@@ -51,6 +60,7 @@ string(name: 'Environment', defaultValue: 'test', description: 'version to deplo
                     }
             steps {
                 echo "this is Deploy stage" 
+                sh 'mvn deploy'
             }
           }
     }
