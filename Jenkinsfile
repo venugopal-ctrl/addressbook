@@ -39,7 +39,7 @@ pipeline {
 		        stage('Deploy') {
                     input {
                         message "Select the version to deploy"
-                        ok "selected"
+                        ok "PLATFORM"
                         parameters{
                            choice(name:'PLATFORM', choices: ['EKS', 'KBS', 'ONPREM','AZURE'], description: 'Pick something') 
                         }
