@@ -14,6 +14,9 @@ pipeline {
 
         choice(name:'APPVERSION', choices: ['1.1', '1.2', '1.3'], description: 'Pick something')
     }
+    environment {
+        PACKAGE_SERVER='ec2-user@172.31.37.35'
+    }
 	stages { 
         stage('Compile') {
             agent{label 'linux_slave'}
@@ -43,11 +46,15 @@ pipeline {
                     agent any
             steps {
                 script{
-                echo "This is package stage ${params.Environment}"
-                sh 'mvn package'
+                    sshagent{['slave2']} {
+               echo "This is package stage ${params.Environment}"
+               sh "scp -o StrictHostkeyChecking=no server-config.sh ${PACKAGE_SERVER}:/home/ec2-user"
+               sh "ssh -o StrictHostkeyChecking=no ${PACKAGE_SERVER} 'bash ~/server-config.sh'"
+           
+                    }
                 }
             }
-        }
+        }   
 		        stage('Deploy') {
                     input {
                         message "Select the version to deploy"
