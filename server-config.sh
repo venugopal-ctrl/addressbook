@@ -10,7 +10,7 @@ then
    cd /home/ec2-user/addressbook
    git pull origin features/devops1
 else
-   git clone https://github.com/preethid/addressbook.git
+   git clone https://github.com/venugopal-ctrl/addressbook.git
    cd addressbook
    git checkout features/devops1
 fi
