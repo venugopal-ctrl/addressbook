@@ -50,12 +50,16 @@ pipeline {
                 script{
                     echo "creating package"
                 sshagent(['slave2']) {
+                withCredentials([usernamePassword(credentialsId: 'venu-hub', passwordVariable: 'password', usernameVariable: 'username')]) {
+
               // echo "Package the code ${params.Env}"
                sh "scp -o StrictHostKeyChecking=no server-config.sh ${BUILD_SERVER}:/home/ec2-user"
                sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} 'bash ~/server-config.sh ${IMAGE_NAME} ${BUILD_NUMBER}'"
+               sh "ssh ${BUILD_SERVER} sudo docker login -u ${username} -p ${password}"
+               sh "ssh ${BUILD_SERVER} sudo docker push ${IMAGE_NAME}:${BUILD_NUMBER}"
               // echo "creating package"
                //sh "mvn package"
-               
+                }
             }
             }
         }
