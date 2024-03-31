@@ -15,11 +15,13 @@ pipeline {
         choice(name:'APPVERSION', choices: ['1.1', '1.2', '1.3'], description: 'Pick something')
     }
     environment {
-        PACKAGE_SERVER='ec2-user@172.31.37.35'
+        BUILD_SERVER='ec2-user@172.31.1.166'
+        IMAGE_NAME='venugopaleega09/java-maven-venuprivaterepo'
     }
 	stages { 
         stage('Compile') {
-            agent{label 'linux_slave'}
+           // agent{label 'linux_slave'}
+           agent any
             steps {
                 script{
                 echo "This is compile stage ${params.APPVERSION}"
@@ -42,33 +44,37 @@ pipeline {
                 }
             }
         }
-		    stage('Package') {
+		    stage('Containerise the packaging+push the image') {
             agent any
             steps {
                 script{
+                    echo "creating package"
                 sshagent(['slave2']) {
-               echo "Package the code ${params.Env}"
-               sh "scp -o StrictHostKeyChecking=no server-config.sh ${PACKAGE_SERVER}:/home/ec2-user"
-               sh "ssh -o StrictHostKeyChecking=no ${PACKAGE_SERVER} 'bash ~/server-config.sh'"
+              // echo "Package the code ${params.Env}"
+               sh "scp -o StrictHostKeyChecking=no server-config.sh ${BUILD_SERVER}:/home/ec2-user"
+               sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER} 'bash ~/server-config.sh ${IMAGE_NAME} ${BUILD_NUMBER}'"
+              // echo "creating package"
+               //sh "mvn package"
                
             }
             }
         }
         }
-		        stage('Deploy') {
-                    input {
-                        message "Select the version to deploy"
-                        ok "PLATFORM"
-                        parameters{
-                           choice(name:'PLATFORM', choices: ['EKS', 'KBS', 'ONPREM','AZURE'], description: 'Pick something') 
-                        }
-                    }
-            steps {
-                script{
-                echo 'This is deploy stage'
+
+		      // stage('Deploy') {
+                    //input {
+                       // message "Select the version to deploy"
+                     //   ok "PLATFORM"
+                    //    parameters{
+                  //         choice(name:'PLATFORM', choices: ['EKS', 'KBS', 'ONPREM','AZURE'], description: 'Pick something') 
+                //        }
+              //      }
+            //steps {
+              //  script{
+             //   echo 'This is deploy stage'
                 //sh 'mvn deploy'
-                }
-            }
-        }
+           //     }
+         //   }
+       // }
   }
 }
