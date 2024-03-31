@@ -50,7 +50,7 @@ pipeline {
                 script{
                     echo "creating package"
                 sshagent(['slave2']) {
-                withCredentials([usernamePassword(credentialsId: 'venu-hub', passwordVariable: 'password', usernameVariable: 'username')]) {
+               withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'password', usernameVariable: 'username')]) {
 
               // echo "Package the code ${params.Env}"
                sh "scp -o StrictHostKeyChecking=no server-config.sh ${BUILD_SERVER}:/home/ec2-user"
