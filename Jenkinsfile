@@ -16,7 +16,7 @@ pipeline {
     }
     environment {
         BUILD_SERVER='ec2-user@172.31.1.166'
-        IMAGE_NAME='venugopaleega09/venuprivaterepo/java-maven-venuprivaterepo'
+        IMAGE_NAME='venugopaleega09/venuprivaterepo/java-maven-image'
     }
 	stages { 
         stage('Compile') {
