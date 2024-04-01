@@ -17,7 +17,7 @@ pipeline {
     environment {
         BUILD_SERVER='ec2-user@172.31.1.166'
         IMAGE_NAME='venugopaleega09/java-maven-image'
-        DEPLOY_SERVER='ec2-user@ 172.31.15.169'
+        DEPLOY_SERVER='ec2-user@172.31.15.169'
     }
 	stages { 
         stage('Compile') {
