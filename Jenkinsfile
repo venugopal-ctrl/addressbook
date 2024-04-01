@@ -44,7 +44,7 @@ pipeline {
                 }
             }
         }
-		    stage('Containerise the packaging+push the image') {
+		    stage('Containerise the app') {
             agent any
             steps {
                 script{
