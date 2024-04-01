@@ -17,6 +17,7 @@ pipeline {
     environment {
         BUILD_SERVER='ec2-user@172.31.1.166'
         IMAGE_NAME='venugopaleega09/java-maven-image'
+        DEPLOY_SERVER='ec2-user@ 172.31.15.169'
     }
 	stages { 
         stage('Compile') {
@@ -65,20 +66,27 @@ pipeline {
         }
         }
 
-		      // stage('Deploy') {
-                    //input {
-                       // message "Select the version to deploy"
-                     //   ok "PLATFORM"
-                    //    parameters{
-                  //         choice(name:'PLATFORM', choices: ['EKS', 'KBS', 'ONPREM','AZURE'], description: 'Pick something') 
-                //        }
-              //      }
-            //steps {
-              //  script{
-             //   echo 'This is deploy stage'
-                //sh 'mvn deploy'
-           //     }
-         //   }
-       // }
+        stage('Deploy the docker container') {
+            agent any
+            steps {
+                script{
+                    echo "Deploy the code in docker container"
+                sshagent(['slave2']) {
+               withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'password', usernameVariable: 'username')]) {
+
+              // echo "Package the code ${params.Env}"
+               sh "ssh -o StrictHostKeyChecking=no ${DEPLOY_SERVER} sudo yum install docker -y"
+               sh "ssh -o StrictHostKeyChecking=no ${DEPLOY_SERVER} sudo systemctl start docker"
+               sh "ssh ${DEPLOY_SERVER} sudo docker login -u ${username} -p ${password}"
+               sh "ssh ${DEPLOY_SERVER} sudo docker run -itd -P ${IMAGE_NAME}:${BUILD_NUMBER}"
+              // echo "creating package"
+               //sh "mvn package"
+                }
+            }
+            }
+        }
+        }
+
+		   
   }
 }
